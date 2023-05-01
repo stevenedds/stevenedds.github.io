@@ -7,7 +7,29 @@ body, h1, h2, p {
   body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Light mode background color */
+    color: #333; /* Light mode text color */
+  }
+  
+  a {
+    color: #1a0dab; /* Light mode link color */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #1c1c1c; /* Dark mode background color */
+      color: #f4f4f4; /* Dark mode text color */
+    }
+  
+    a {
+      color: #759ef2; /* Dark mode link color */
+    }
   }
   
   main {
@@ -38,5 +60,12 @@ body, h1, h2, p {
   h2 {
     font-size: 1.2rem;
     color: #777;
+  }
+  
+  /* Update h2 color for dark mode */
+  @media (prefers-color-scheme: dark) {
+    h2 {
+      color: #999;
+    }
   }
   
