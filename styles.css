@@ -77,6 +77,23 @@ main {
     margin: 0 auto;
 }
 
+@media (max-width: 600px) {
+    .profile-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        align-items: center;
+    }
+
+    .profile-container .profile-image {
+        margin: 0 0 1.5rem 0;
+    }
+
+    .profile-details {
+        align-items: center;
+    }
+}
+
 .profile-container:hover {
     transform: translateY(-2px);
 }
