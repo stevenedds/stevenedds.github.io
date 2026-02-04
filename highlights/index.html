@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlights | Steven Edds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #888888;
+            --text-muted: #555555;
+            --accent: #ff6b35;
+            --accent-dim: #cc5529;
+            --border: #2a2a2a;
+            --highlight-bg: #0f0f0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stats span {
+            color: var(--accent);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            padding-left: 2.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-box::before {
+            content: "⌕";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        select {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.75rem 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: var(--accent);
+        }
+
+        .random-btn {
+            padding: 0.75rem 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            color: #000;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .random-btn:hover {
+            background: var(--accent-dim);
+        }
+
+        .results-info {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .highlights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .highlight-card {
+            background: var(--bg-secondary);
+            padding: 1.25rem 1.5rem;
+            transition: background 0.15s;
+        }
+
+        .highlight-card:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .highlight-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .highlight-book {
+            font-weight: 500;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .highlight-author {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .highlight-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .highlight-text {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .book-group {
+            margin-bottom: 2rem;
+        }
+
+        .book-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .book-header:hover .book-title {
+            color: var(--accent);
+        }
+
+        .book-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .book-author {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .book-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .book-highlights {
+            display: none;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .book-highlights.expanded {
+            display: flex;
+        }
+
+        .book-highlight {
+            background: var(--bg-secondary);
+            padding: 1rem 1.25rem;
+        }
+
+        .book-highlight-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            .highlight-meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .highlight-card {
+                padding: 1rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+            }
+
+            select, .random-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Book Highlights</h1>
+            <p class="stats">
+                <span id="highlight-count">—</span> highlights from <span id="book-count">—</span> books
+            </p>
+        </header>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search highlights...">
+            </div>
+            <div class="filter-row">
+                <select id="book-filter">
+                    <option value="">All Books</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="recent">Recent First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="book">By Book</option>
+                </select>
+                <button class="random-btn" id="random-btn">↻ Random</button>
+            </div>
+        </div>
+
+        <p class="results-info" id="results-info"></p>
+
+        <div id="content">
+            <div class="loading">Loading highlights...</div>
+        </div>
+    </div>
+
+    <script>
+        let allHighlights = [];
+        let filteredHighlights = [];
+
+        async function init() {
+            try {
+                const response = await fetch('highlights.json');
+                allHighlights = await response.json();
+                
+                // Sort by date descending by default
+                allHighlights.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Update stats
+                document.getElementById('highlight-count').textContent = allHighlights.length.toLocaleString();
+                const books = [...new Set(allHighlights.map(h => h.book))].filter(b => b);
+                document.getElementById('book-count').textContent = books.length;
+
+                // Populate book filter
+                const bookFilter = document.getElementById('book-filter');
+                const bookCounts = {};
+                allHighlights.forEach(h => {
+                    if (h.book) {
+                        bookCounts[h.book] = (bookCounts[h.book] || 0) + 1;
+                    }
+                });
+                
+                const sortedBooks = Object.entries(bookCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([book, count]) => ({ book, count }));
+
+                sortedBooks.forEach(({ book, count }) => {
+                    const option = document.createElement('option');
+                    option.value = book;
+                    option.textContent = `${book} (${count})`;
+                    bookFilter.appendChild(option);
+                });
+
+                filteredHighlights = [...allHighlights];
+                render();
+            } catch (error) {
+                document.getElementById('content').innerHTML = `
+                    <div class="empty-state">
+                        <h2>Failed to load highlights</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function filterHighlights() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const bookFilter = document.getElementById('book-filter').value;
+            const sortFilter = document.getElementById('sort-filter').value;
+
+            filteredHighlights = allHighlights.filter(h => {
+                const matchesSearch = !searchTerm || 
+                    h.text.toLowerCase().includes(searchTerm) ||
+                    h.book.toLowerCase().includes(searchTerm) ||
+                    h.author.toLowerCase().includes(searchTerm);
+                const matchesBook = !bookFilter || h.book === bookFilter;
+                return matchesSearch && matchesBook;
+            });
+
+            // Sort
+            if (sortFilter === 'recent') {
+                filteredHighlights.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (sortFilter === 'oldest') {
+                filteredHighlights.sort((a, b) => new Date(a.date) - new Date(b.date));
+            } else if (sortFilter === 'book') {
+                filteredHighlights.sort((a, b) => a.book.localeCompare(b.book));
+            }
+
+            render();
+        }
+
+        function render() {
+            const content = document.getElementById('content');
+            const sortFilter = document.getElementById('sort-filter').value;
+            
+            document.getElementById('results-info').textContent = 
+                `Showing ${filteredHighlights.length.toLocaleString()} highlights`;
+
+            if (filteredHighlights.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No highlights found</h2>
+                        <p>Try a different search or filter</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (sortFilter === 'book') {
+                renderByBook();
+            } else {
+                renderFlat();
+            }
+        }
+
+        function renderFlat() {
+            const content = document.getElementById('content');
+            const displayed = filteredHighlights.slice(0, 100);
+            
+            content.innerHTML = `
+                <div class="highlights-list">
+                    ${displayed.map(h => `
+                        <div class="highlight-card">
+                            <div class="highlight-meta">
+                                <div>
+                                    <div class="highlight-book">${escapeHtml(h.book)}</div>
+                                    <div class="highlight-author">${escapeHtml(h.author)}</div>
+                                </div>
+                                <div class="highlight-date">${formatDate(h.date)}</div>
+                            </div>
+                            <div class="highlight-text">${escapeHtml(h.text)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${filteredHighlights.length > 100 ? `
+                    <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;">
+                        Showing 100 of ${filteredHighlights.length.toLocaleString()} — use search to narrow down
+                    </p>
+                ` : ''}
+            `;
+        }
+
+        function renderByBook() {
+            const content = document.getElementById('content');
+            const byBook = {};
+            
+            filteredHighlights.forEach(h => {
+                if (!byBook[h.book]) {
+                    byBook[h.book] = { author: h.author, highlights: [] };
+                }
+                byBook[h.book].highlights.push(h);
+            });
+
+            const sortedBooks = Object.entries(byBook)
+                .sort((a, b) => b[1].highlights.length - a[1].highlights.length);
+
+            content.innerHTML = sortedBooks.map(([book, data], idx) => `
+                <div class="book-group">
+                    <div class="book-header" onclick="toggleBook(${idx})">
+                        <div>
+                            <div class="book-title">${escapeHtml(book)}</div>
+                            <div class="book-author">${escapeHtml(data.author)}</div>
+                        </div>
+                        <span class="book-count">${data.highlights.length}</span>
+                    </div>
+                    <div class="book-highlights" id="book-${idx}">
+                        ${data.highlights.map(h => `
+                            <div class="book-highlight">
+                                <div class="book-highlight-date">${formatDate(h.date)}</div>
+                                <div class="highlight-text">${escapeHtml(h.text)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleBook(idx) {
+            const el = document.getElementById(`book-${idx}`);
+            el.classList.toggle('expanded');
+        }
+
+        function showRandom() {
+            if (allHighlights.length === 0) return;
+            
+            const random = allHighlights[Math.floor(Math.random() * allHighlights.length)];
+            
+            document.getElementById('search').value = '';
+            document.getElementById('book-filter').value = '';
+            document.getElementById('sort-filter').value = 'recent';
+            
+            filteredHighlights = [random];
+            
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="highlights-list">
+                    <div class="highlight-card">
+                        <div class="highlight-meta">
+                            <div>
+                                <div class="highlight-book">${escapeHtml(random.book)}</div>
+                                <div class="highlight-author">${escapeHtml(random.author)}</div>
+                            </div>
+                            <div class="highlight-date">${formatDate(random.date)}</div>
+                        </div>
+                        <div class="highlight-text">${escapeHtml(random.text)}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('results-info').textContent = 'Random highlight';
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', debounce(filterHighlights, 200));
+        document.getElementById('book-filter').addEventListener('change', filterHighlights);
+        document.getElementById('sort-filter').addEventListener('change', filterHighlights);
+        document.getElementById('random-btn').addEventListener('click', showRandom);
+
+        function debounce(fn, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => fn.apply(this, args), delay);
+            };
+        }
+
+        init();
+    </script>
+</body>
+</html>
