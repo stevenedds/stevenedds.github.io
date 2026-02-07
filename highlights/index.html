@@ -363,6 +363,7 @@
                 <select id="sort-filter">
                     <option value="recent">Recent First</option>
                     <option value="oldest">Oldest First</option>
+                    <option value="shuffled">Shuffled</option>
                     <option value="book">By Book</option>
                 </select>
                 <button class="random-btn" id="random-btn">↻ Random</button>
@@ -447,6 +448,11 @@
                 filteredHighlights.sort((a, b) => new Date(b.date) - new Date(a.date));
             } else if (sortFilter === 'oldest') {
                 filteredHighlights.sort((a, b) => new Date(a.date) - new Date(b.date));
+            } else if (sortFilter === 'shuffled') {
+                for (let i = filteredHighlights.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [filteredHighlights[i], filteredHighlights[j]] = [filteredHighlights[j], filteredHighlights[i]];
+                }
             } else if (sortFilter === 'book') {
                 filteredHighlights.sort((a, b) => a.book.localeCompare(b.book));
             }
