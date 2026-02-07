@@ -361,9 +361,9 @@
                     <option value="">All Books</option>
                 </select>
                 <select id="sort-filter">
+                    <option value="shuffled">Shuffled</option>
                     <option value="recent">Recent First</option>
                     <option value="oldest">Oldest First</option>
-                    <option value="shuffled">Shuffled</option>
                     <option value="book">By Book</option>
                 </select>
                 <button class="random-btn" id="random-btn">↻ Random</button>
@@ -389,8 +389,11 @@
                 const response = await fetch('highlights.json');
                 allHighlights = await response.json();
                 
-                // Sort by date descending by default
-                allHighlights.sort((a, b) => new Date(b.date) - new Date(a.date));
+                // Shuffle by default
+                for (let i = allHighlights.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [allHighlights[i], allHighlights[j]] = [allHighlights[j], allHighlights[i]];
+                }
                 
                 // Update stats
                 document.getElementById('highlight-count').textContent = allHighlights.length.toLocaleString();
