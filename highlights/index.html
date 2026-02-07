@@ -379,6 +379,9 @@
     <script>
         let allHighlights = [];
         let filteredHighlights = [];
+        let displayedCount = 0;
+        const BATCH_SIZE = 50;
+        let isLoading = false;
 
         async function init() {
             try {
@@ -477,29 +480,49 @@
 
         function renderFlat() {
             const content = document.getElementById('content');
-            const displayed = filteredHighlights.slice(0, 100);
+            displayedCount = 0;
             
             content.innerHTML = `
-                <div class="highlights-list">
-                    ${displayed.map(h => `
-                        <div class="highlight-card">
-                            <div class="highlight-meta">
-                                <div>
-                                    <div class="highlight-book">${escapeHtml(h.book)}</div>
-                                    <div class="highlight-author">${escapeHtml(h.author)}</div>
-                                </div>
-                                <div class="highlight-date">${formatDate(h.date)}</div>
-                            </div>
-                            <div class="highlight-text">${escapeHtml(h.text)}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                ${filteredHighlights.length > 100 ? `
-                    <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;">
-                        Showing 100 of ${filteredHighlights.length.toLocaleString()} — use search to narrow down
-                    </p>
-                ` : ''}
+                <div class="highlights-list" id="highlights-list"></div>
+                <div id="load-more" style="text-align: center; padding: 2rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;"></div>
             `;
+            
+            loadMoreHighlights();
+        }
+
+        function loadMoreHighlights() {
+            if (isLoading || displayedCount >= filteredHighlights.length) return;
+            isLoading = true;
+            
+            const list = document.getElementById('highlights-list');
+            const loadMore = document.getElementById('load-more');
+            const batch = filteredHighlights.slice(displayedCount, displayedCount + BATCH_SIZE);
+            
+            batch.forEach(h => {
+                const card = document.createElement('div');
+                card.className = 'highlight-card';
+                card.innerHTML = `
+                    <div class="highlight-meta">
+                        <div>
+                            <div class="highlight-book">${escapeHtml(h.book)}</div>
+                            <div class="highlight-author">${escapeHtml(h.author)}</div>
+                        </div>
+                        <div class="highlight-date">${formatDate(h.date)}</div>
+                    </div>
+                    <div class="highlight-text">${escapeHtml(h.text)}</div>
+                `;
+                list.appendChild(card);
+            });
+            
+            displayedCount += batch.length;
+            
+            if (displayedCount < filteredHighlights.length) {
+                loadMore.textContent = `Loaded ${displayedCount.toLocaleString()} of ${filteredHighlights.length.toLocaleString()} — scroll for more`;
+            } else {
+                loadMore.textContent = `All ${filteredHighlights.length.toLocaleString()} highlights loaded`;
+            }
+            
+            isLoading = false;
         }
 
         function renderByBook() {
@@ -594,6 +617,20 @@
         document.getElementById('book-filter').addEventListener('change', filterHighlights);
         document.getElementById('sort-filter').addEventListener('change', filterHighlights);
         document.getElementById('random-btn').addEventListener('click', showRandom);
+
+        // Infinite scroll
+        window.addEventListener('scroll', () => {
+            const sortFilter = document.getElementById('sort-filter').value;
+            if (sortFilter === 'book') return; // Don't infinite scroll in book view
+            
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            if (scrollTop + windowHeight >= documentHeight - 500) {
+                loadMoreHighlights();
+            }
+        });
 
         function debounce(fn, delay) {
             let timeout;
