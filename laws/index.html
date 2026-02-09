@@ -118,21 +118,54 @@
         .refresh-btn {
             display: inline-block;
             margin-top: 20px;
-            padding: 12px 30px;
-            background: var(--rust);
-            color: var(--black);
+            padding: 15px 50px;
+            background: transparent;
+            color: var(--rust);
             font-family: 'Anton', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
+            font-size: 1.4rem;
+            letter-spacing: 0.15em;
             text-decoration: none;
             cursor: pointer;
-            border: none;
-            transition: all 0.15s ease;
+            border: 4px solid var(--rust);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
         }
         
         .refresh-btn:hover {
-            background: var(--green);
-            transform: translateY(-2px);
+            background: var(--rust);
+            color: var(--black);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(196, 77, 44, 0.4);
+        }
+        
+        .refresh-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .law {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .law.fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        
+        .law.fade-in {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 600px) {
@@ -159,7 +192,7 @@
     
     <footer>
         <p>@stevenedds</p>
-        <button class="refresh-btn" onclick="loadLaws()">New Laws</button>
+        <button class="refresh-btn" onclick="loadLaws(true)">Shuffle</button>
     </footer>
     
     <div class="warning-tape"></div>
@@ -195,7 +228,21 @@
             { text: "Done is better than perfect.", source: "The Lean Startup" },
             { text: "Move fast and break things.", source: "Facebook (pre-2014)" },
             { text: "The reasonable man adapts himself to the world. The unreasonable one persists in trying to adapt the world to himself.", source: "Man and Superman" },
-            { text: "You miss 100% of the shots you don't take.", source: "Wayne Gretzky / The Office" }
+            { text: "You miss 100% of the shots you don't take.", source: "Wayne Gretzky / The Office" },
+            { text: "Comfort is the enemy of progress.", source: "P.T. Barnum" },
+            { text: "The best way to predict the future is to create it.", source: "Peter Drucker" },
+            { text: "If you're not embarrassed by the first version of your product, you've launched too late.", source: "Reid Hoffman" },
+            { text: "Stay hungry. Stay foolish.", source: "Steve Jobs" },
+            { text: "The only way to do great work is to love what you do.", source: "Steve Jobs" },
+            { text: "Your time is limited. Don't waste it living someone else's life.", source: "Steve Jobs" },
+            { text: "Ideas are worthless. Execution is everything.", source: "Scott Adams" },
+            { text: "The world rewards you for value provided, not time spent.", source: "The Almanack of Naval Ravikant" },
+            { text: "Play stupid games, win stupid prizes.", source: "Internet Wisdom" },
+            { text: "Strong opinions, loosely held.", source: "Paul Saffo" },
+            { text: "If you want something you've never had, you must do something you've never done.", source: "Thomas Jefferson" },
+            { text: "The cost of being wrong is less than the cost of doing nothing.", source: "Seth Godin" },
+            { text: "Comparison is the thief of joy.", source: "Theodore Roosevelt" },
+            { text: "The man who moves a mountain begins by carrying away small stones.", source: "Confucius" }
         ];
         
         function shuffle(array) {
@@ -206,10 +253,47 @@
             return array;
         }
         
-        function loadLaws() {
-            const container = document.getElementById('laws-container');
-            const shuffled = shuffle([...laws]).slice(0, 7);
+        let isAnimating = false;
+        
+        function loadLaws(animate = false) {
+            if (isAnimating) return;
             
+            const container = document.getElementById('laws-container');
+            const shuffled = shuffle([...laws]).slice(0, 10);
+            
+            if (animate && container.children.length > 0) {
+                isAnimating = true;
+                const existingLaws = container.querySelectorAll('.law');
+                
+                // Stagger fade out
+                existingLaws.forEach((law, i) => {
+                    setTimeout(() => {
+                        law.classList.add('fade-out');
+                    }, i * 40);
+                });
+                
+                // After fade out, render new laws with staggered fade in
+                setTimeout(() => {
+                    renderLaws(container, shuffled);
+                    const newLaws = container.querySelectorAll('.law');
+                    newLaws.forEach((law, i) => {
+                        law.style.opacity = '0';
+                        setTimeout(() => {
+                            law.classList.add('fade-in');
+                            law.style.opacity = '';
+                        }, i * 60);
+                    });
+                    
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, shuffled.length * 60 + 400);
+                }, existingLaws.length * 40 + 300);
+            } else {
+                renderLaws(container, shuffled);
+            }
+        }
+        
+        function renderLaws(container, shuffled) {
             container.innerHTML = shuffled.map((law, i) => `
                 <div class="law">
                     <div class="law-number">${String(i + 1).padStart(2, '0')}</div>
@@ -219,7 +303,7 @@
             `).join('');
         }
         
-        loadLaws();
+        loadLaws(false);
     </script>
 </body>
 </html>
