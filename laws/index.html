@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAWS // STEVEN EDDS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --black: #0a0a0a;
+            --dark: #111;
+            --rust: #c44d2c;
+            --yellow: #f0c000;
+            --green: #b4ff00;
+            --white: #f5f5f5;
+            --dim: #666;
+        }
+        
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .warning-tape {
+            background: repeating-linear-gradient(90deg, var(--yellow) 0px, var(--yellow) 30px, var(--black) 30px, var(--black) 60px);
+            height: 20px;
+            width: 100%;
+        }
+        
+        header {
+            background: var(--rust);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            letter-spacing: 0.2em;
+            color: var(--black);
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 0.8rem;
+            color: var(--black);
+            letter-spacing: 0.3em;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .law {
+            margin-bottom: 60px;
+            position: relative;
+            padding-left: 80px;
+        }
+        
+        .law-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            color: var(--rust);
+            line-height: 1;
+            opacity: 0.8;
+        }
+        
+        .law-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .law-source {
+            font-size: 0.75rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .law:nth-child(3n+1) .law-text { color: var(--green); }
+        .law:nth-child(3n+2) .law-text { color: var(--yellow); }
+        .law:nth-child(3n) .law-text { color: var(--rust); }
+        
+        .divider {
+            width: 100%;
+            height: 4px;
+            background: var(--rust);
+            margin: 80px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 4px solid var(--rust);
+        }
+        
+        footer p {
+            font-size: 0.7rem;
+            color: var(--dim);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        
+        .refresh-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--rust);
+            color: var(--black);
+            font-family: 'Anton', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+        }
+        
+        .refresh-btn:hover {
+            background: var(--green);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 600px) {
+            .law { padding-left: 50px; }
+            .law-number { font-size: 2.5rem; }
+            .law-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-tape"></div>
+    <header>
+        <h1>Laws</h1>
+        <div class="subtitle">Extracted from 196 books // Shuffled on load</div>
+    </header>
+    
+    <main id="laws-container">
+        <div class="law">
+            <div class="law-number">01</div>
+            <div class="law-text">Loading...</div>
+            <div class="law-source">—</div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>@stevenedds</p>
+        <button class="refresh-btn" onclick="loadLaws()">New Laws</button>
+    </footer>
+    
+    <div class="warning-tape"></div>
+
+    <script>
+        const laws = [
+            { text: "If you leave your growth to randomness, you'll always live in the land of mediocrity.", source: "High Performance Habits" },
+            { text: "Small people always belittle your ambitions, while the great make you feel that you too can be great.", source: "Chaos Monkeys" },
+            { text: "The timing is never right to have a baby.", source: "The 4-Hour Workweek" },
+            { text: "The internet revolution only comes once in a lifetime, so strike while the iron is hot.", source: "Elon Musk" },
+            { text: "There are only two inflection points in personal wealth: fuck-you money and fuck-the-world money.", source: "Chaos Monkeys" },
+            { text: "Risky, but only a small risk. Fuck it. Let's just go.", source: "Elon Musk" },
+            { text: "Everything I did was to get a reaction out of people who hated me most. That's a shallow way to live.", source: "Can't Hurt Me" },
+            { text: "I say no to nearly everything. I aspire to only work with people I can work with forever.", source: "Tribe of Mentors" },
+            { text: "Your mind, given free undistracted time, will automatically start to draw links in new ways.", source: "Stolen Focus" },
+            { text: "The ability to focus is the power to decide what to ignore.", source: "Essentialism" },
+            { text: "The way to get startup ideas is not to try to think of startup ideas. It's to look for problems.", source: "Zero to One" },
+            { text: "Wealth is assets that earn while you sleep.", source: "The Almanack of Naval Ravikant" },
+            { text: "The more you sweat in training, the less you bleed in combat.", source: "Can't Hurt Me" },
+            { text: "If you want to be successful, find someone who has achieved the results you want and copy them.", source: "Tools of Titans" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", source: "The Psychology of Money" },
+            { text: "You're not the product of your circumstances. You're the product of your decisions.", source: "High Performance Habits" },
+            { text: "Most people overestimate what they can do in a day and underestimate what they can do in a year.", source: "The 4-Hour Workweek" },
+            { text: "The obstacle is the way.", source: "The Obstacle Is the Way" },
+            { text: "Hard choices, easy life. Easy choices, hard life.", source: "Can't Hurt Me" },
+            { text: "What you do on your bad days matters more than what you do on your good days.", source: "Atomic Habits" },
+            { text: "The things you own end up owning you.", source: "Fight Club" },
+            { text: "Price is what you pay. Value is what you get.", source: "The Psychology of Money" },
+            { text: "The best investment you can make is in yourself.", source: "The Almanack of Naval Ravikant" },
+            { text: "Discipline equals freedom.", source: "Extreme Ownership" },
+            { text: "Be so good they can't ignore you.", source: "So Good They Can't Ignore You" },
+            { text: "Your network is your net worth.", source: "Never Eat Alone" },
+            { text: "Done is better than perfect.", source: "The Lean Startup" },
+            { text: "Move fast and break things.", source: "Facebook (pre-2014)" },
+            { text: "The reasonable man adapts himself to the world. The unreasonable one persists in trying to adapt the world to himself.", source: "Man and Superman" },
+            { text: "You miss 100% of the shots you don't take.", source: "Wayne Gretzky / The Office" }
+        ];
+        
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        function loadLaws() {
+            const container = document.getElementById('laws-container');
+            const shuffled = shuffle([...laws]).slice(0, 7);
+            
+            container.innerHTML = shuffled.map((law, i) => `
+                <div class="law">
+                    <div class="law-number">${String(i + 1).padStart(2, '0')}</div>
+                    <div class="law-text">"${law.text}"</div>
+                    <div class="law-source">— ${law.source}</div>
+                </div>
+            `).join('');
+        }
+        
+        loadLaws();
+    </script>
+</body>
+</html>
