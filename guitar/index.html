@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar Cheat Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 20px;
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: #ff6b35;
+      margin: 28px 0 10px 0;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #222;
+    }
+
+    h2:first-of-type { margin-top: 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    th {
+      background: #1a1a1a;
+      color: #ff6b35;
+      font-weight: 600;
+      text-align: left;
+      padding: 6px 8px;
+      border: 1px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 5px 8px;
+      border: 1px solid #1e1e1e;
+      white-space: nowrap;
+    }
+
+    tr:nth-child(even) { background: #111; }
+    tr:hover { background: #1a1a1a; }
+
+    td:first-child {
+      font-weight: 700;
+      color: #fff;
+      background: #141414;
+      min-width: 40px;
+    }
+
+    .minor { color: #74b9ff; }
+    .dim { color: #666; }
+    .major { color: #e0e0e0; }
+
+    .section { margin-bottom: 32px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .note { color: #888; font-size: 11px; margin-top: 4px; }
+
+    .prog-name { color: #ffd93d; font-weight: 600; }
+    .prog-feel { color: #666; font-style: italic; }
+
+    .highlight { background: #1a1200 !important; }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 11px; padding: 12px; }
+      table { font-size: 11px; }
+      td, th { padding: 4px 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Guitar Cheat Sheet</h1>
+<p class="subtitle">keys / chords / progressions / notes / capo</p>
+
+<!-- SECTION 1: Chords in Every Key -->
+<div class="section">
+  <h2>Chords in Major Keys</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>I</th>
+        <th>ii</th>
+        <th>iii</th>
+        <th>IV</th>
+        <th>V</th>
+        <th>vi</th>
+        <th>vii&deg;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>C</td><td class="major">C</td><td class="minor">Dm</td><td class="minor">Em</td><td class="major">F</td><td class="major">G</td><td class="minor">Am</td><td class="dim">Bdim</td></tr>
+      <tr><td>G</td><td class="major">G</td><td class="minor">Am</td><td class="minor">Bm</td><td class="major">C</td><td class="major">D</td><td class="minor">Em</td><td class="dim">F#dim</td></tr>
+      <tr><td>D</td><td class="major">D</td><td class="minor">Em</td><td class="minor">F#m</td><td class="major">G</td><td class="major">A</td><td class="minor">Bm</td><td class="dim">C#dim</td></tr>
+      <tr><td>A</td><td class="major">A</td><td class="minor">Bm</td><td class="minor">C#m</td><td class="major">D</td><td class="major">E</td><td class="minor">F#m</td><td class="dim">G#dim</td></tr>
+      <tr><td>E</td><td class="major">E</td><td class="minor">F#m</td><td class="minor">G#m</td><td class="major">A</td><td class="major">B</td><td class="minor">C#m</td><td class="dim">D#dim</td></tr>
+      <tr><td>F</td><td class="major">F</td><td class="minor">Gm</td><td class="minor">Am</td><td class="major">Bb</td><td class="major">C</td><td class="minor">Dm</td><td class="dim">Edim</td></tr>
+      <tr><td>Bb</td><td class="major">Bb</td><td class="minor">Cm</td><td class="minor">Dm</td><td class="major">Eb</td><td class="major">F</td><td class="minor">Gm</td><td class="dim">Adim</td></tr>
+      <tr><td>Eb</td><td class="major">Eb</td><td class="minor">Fm</td><td class="minor">Gm</td><td class="major">Ab</td><td class="major">Bb</td><td class="minor">Cm</td><td class="dim">Ddim</td></tr>
+      <tr><td>Ab</td><td class="major">Ab</td><td class="minor">Bbm</td><td class="minor">Cm</td><td class="major">Db</td><td class="major">Eb</td><td class="minor">Fm</td><td class="dim">Gdim</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 2: Minor Keys -->
+<div class="section">
+  <h2>Chords in Minor Keys</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>i</th>
+        <th>ii&deg;</th>
+        <th>III</th>
+        <th>iv</th>
+        <th>v</th>
+        <th>VI</th>
+        <th>VII</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Am</td><td class="minor">Am</td><td class="dim">Bdim</td><td class="major">C</td><td class="minor">Dm</td><td class="minor">Em</td><td class="major">F</td><td class="major">G</td></tr>
+      <tr><td>Em</td><td class="minor">Em</td><td class="dim">F#dim</td><td class="major">G</td><td class="minor">Am</td><td class="minor">Bm</td><td class="major">C</td><td class="major">D</td></tr>
+      <tr><td>Bm</td><td class="minor">Bm</td><td class="dim">C#dim</td><td class="major">D</td><td class="minor">Em</td><td class="minor">F#m</td><td class="major">G</td><td class="major">A</td></tr>
+      <tr><td>Dm</td><td class="minor">Dm</td><td class="dim">Edim</td><td class="major">F</td><td class="minor">Gm</td><td class="minor">Am</td><td class="major">Bb</td><td class="major">C</td></tr>
+      <tr><td>Gm</td><td class="minor">Gm</td><td class="dim">Adim</td><td class="major">Bb</td><td class="minor">Cm</td><td class="minor">Dm</td><td class="major">Eb</td><td class="major">F</td></tr>
+      <tr><td>Cm</td><td class="minor">Cm</td><td class="dim">Ddim</td><td class="major">Eb</td><td class="minor">Fm</td><td class="minor">Gm</td><td class="major">Ab</td><td class="major">Bb</td></tr>
+      <tr><td>F#m</td><td class="minor">F#m</td><td class="dim">G#dim</td><td class="major">A</td><td class="minor">Bm</td><td class="minor">C#m</td><td class="major">D</td><td class="major">E</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 3: Notes in Chords -->
+<div class="section">
+  <h2>Notes in Common Chords</h2>
+  <div class="grid-2">
+    <div>
+      <table>
+        <thead><tr><th>Chord</th><th>Notes</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>C</td><td>C E G</td><td>1 3 5</td></tr>
+          <tr><td>D</td><td>D F# A</td><td>1 3 5</td></tr>
+          <tr><td>E</td><td>E G# B</td><td>1 3 5</td></tr>
+          <tr><td>F</td><td>F A C</td><td>1 3 5</td></tr>
+          <tr><td>G</td><td>G B D</td><td>1 3 5</td></tr>
+          <tr><td>A</td><td>A C# E</td><td>1 3 5</td></tr>
+          <tr><td>B</td><td>B D# F#</td><td>1 3 5</td></tr>
+          <tr><td>Bb</td><td>Bb D F</td><td>1 3 5</td></tr>
+          <tr><td>Eb</td><td>Eb G Bb</td><td>1 3 5</td></tr>
+          <tr><td>Ab</td><td>Ab C Eb</td><td>1 3 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Chord</th><th>Notes</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Am</td><td>A C E</td><td>1 b3 5</td></tr>
+          <tr><td>Bm</td><td>B D F#</td><td>1 b3 5</td></tr>
+          <tr><td>Cm</td><td>C Eb G</td><td>1 b3 5</td></tr>
+          <tr><td>Dm</td><td>D F A</td><td>1 b3 5</td></tr>
+          <tr><td>Em</td><td>E G B</td><td>1 b3 5</td></tr>
+          <tr><td>F#m</td><td>F# A C#</td><td>1 b3 5</td></tr>
+          <tr><td>Gm</td><td>G Bb D</td><td>1 b3 5</td></tr>
+          <tr><td>C#m</td><td>C# E G#</td><td>1 b3 5</td></tr>
+          <tr><td>G#m</td><td>G# B D#</td><td>1 b3 5</td></tr>
+          <tr><td>Bbm</td><td>Bb Db F</td><td>1 b3 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: 7th Chords -->
+<div class="section">
+  <h2>7th & Extended Chords</h2>
+  <div class="grid-2">
+    <div>
+      <table>
+        <thead><tr><th>Chord</th><th>Notes</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Cmaj7</td><td>C E G B</td><td>1 3 5 7</td></tr>
+          <tr><td>Dmaj7</td><td>D F# A C#</td><td>1 3 5 7</td></tr>
+          <tr><td>Fmaj7</td><td>F A C E</td><td>1 3 5 7</td></tr>
+          <tr><td>Gmaj7</td><td>G B D F#</td><td>1 3 5 7</td></tr>
+          <tr><td>Amaj7</td><td>A C# E G#</td><td>1 3 5 7</td></tr>
+          <tr><td>C7</td><td>C E G Bb</td><td>1 3 5 b7</td></tr>
+          <tr><td>D7</td><td>D F# A C</td><td>1 3 5 b7</td></tr>
+          <tr><td>E7</td><td>E G# B D</td><td>1 3 5 b7</td></tr>
+          <tr><td>G7</td><td>G B D F</td><td>1 3 5 b7</td></tr>
+          <tr><td>A7</td><td>A C# E G</td><td>1 3 5 b7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Chord</th><th>Notes</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Am7</td><td>A C E G</td><td>1 b3 5 b7</td></tr>
+          <tr><td>Bm7</td><td>B D F# A</td><td>1 b3 5 b7</td></tr>
+          <tr><td>Dm7</td><td>D F A C</td><td>1 b3 5 b7</td></tr>
+          <tr><td>Em7</td><td>E G B D</td><td>1 b3 5 b7</td></tr>
+          <tr><td>F#m7</td><td>F# A C# E</td><td>1 b3 5 b7</td></tr>
+          <tr><td>Cadd9</td><td>C E G D</td><td>1 3 5 9</td></tr>
+          <tr><td>Gadd9</td><td>G B D A</td><td>1 3 5 9</td></tr>
+          <tr><td>Dsus2</td><td>D E A</td><td>1 2 5</td></tr>
+          <tr><td>Dsus4</td><td>D G A</td><td>1 4 5</td></tr>
+          <tr><td>Asus4</td><td>A D E</td><td>1 4 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: Common Progressions -->
+<div class="section">
+  <h2>Common Progressions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Numerals</th>
+        <th>In C</th>
+        <th>In G</th>
+        <th>In D</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="prog-name">Pop</span></td>
+        <td>I V vi IV</td>
+        <td>C G Am F</td>
+        <td>G D Em C</td>
+        <td>D A Bm G</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">50s</span></td>
+        <td>I vi IV V</td>
+        <td>C Am F G</td>
+        <td>G Em C D</td>
+        <td>D Bm G A</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">Sad</span></td>
+        <td>vi IV I V</td>
+        <td>Am F C G</td>
+        <td>Em C G D</td>
+        <td>Bm G D A</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">Blues</span></td>
+        <td>I IV I V IV I</td>
+        <td colspan="3">C F C G F C</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">Jazz ii-V-I</span></td>
+        <td>ii V I</td>
+        <td>Dm7 G7 Cmaj7</td>
+        <td>Am7 D7 Gmaj7</td>
+        <td>Em7 A7 Dmaj7</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">Andalusian</span></td>
+        <td>i VII VI V</td>
+        <td>Am G F E</td>
+        <td>Em D C B</td>
+        <td>Bm A G F#</td>
+      </tr>
+      <tr>
+        <td><span class="prog-name">Country</span></td>
+        <td>I IV V</td>
+        <td>C F G</td>
+        <td>G C D</td>
+        <td>D G A</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 6: Capo Chart -->
+<div class="section">
+  <h2>Capo Transposition Chart</h2>
+  <p class="note">Row = open chord shape you play. Column = capo fret. Cell = actual key that sounds.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Shape</th>
+        <th>Capo 1</th>
+        <th>Capo 2</th>
+        <th>Capo 3</th>
+        <th>Capo 4</th>
+        <th>Capo 5</th>
+        <th>Capo 6</th>
+        <th>Capo 7</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>C</td><td>C#/Db</td><td>D</td><td>Eb</td><td>E</td><td>F</td><td>F#/Gb</td><td>G</td></tr>
+      <tr><td>D</td><td>Eb</td><td>E</td><td>F</td><td>F#/Gb</td><td>G</td><td>Ab</td><td>A</td></tr>
+      <tr><td>E</td><td>F</td><td>F#/Gb</td><td>G</td><td>Ab</td><td>A</td><td>Bb</td><td>B</td></tr>
+      <tr><td>G</td><td>Ab</td><td>A</td><td>Bb</td><td>B</td><td>C</td><td>C#/Db</td><td>D</td></tr>
+      <tr><td>A</td><td>Bb</td><td>B</td><td>C</td><td>C#/Db</td><td>D</td><td>Eb</td><td>E</td></tr>
+      <tr class="highlight"><td>Am</td><td>Bbm</td><td>Bm</td><td>Cm</td><td>C#m</td><td>Dm</td><td>Ebm</td><td>Em</td></tr>
+      <tr class="highlight"><td>Em</td><td>Fm</td><td>F#m</td><td>Gm</td><td>G#m</td><td>Am</td><td>Bbm</td><td>Bm</td></tr>
+      <tr class="highlight"><td>Dm</td><td>Ebm</td><td>Em</td><td>Fm</td><td>F#m</td><td>Gm</td><td>G#m</td><td>Am</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 7: String Tuning / Quick Ref -->
+<div class="section">
+  <h2>Quick Reference</h2>
+  <div class="grid-3">
+    <div>
+      <table>
+        <thead><tr><th colspan="2">Standard Tuning</th></tr></thead>
+        <tbody>
+          <tr><td>6 (low)</td><td>E2</td></tr>
+          <tr><td>5</td><td>A2</td></tr>
+          <tr><td>4</td><td>D3</td></tr>
+          <tr><td>3</td><td>G3</td></tr>
+          <tr><td>2</td><td>B3</td></tr>
+          <tr><td>1 (high)</td><td>E4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th colspan="2">Chromatic Scale</th></tr></thead>
+        <tbody>
+          <tr><td colspan="2">C C#/Db D D#/Eb E F F#/Gb G G#/Ab A A#/Bb B</td></tr>
+          <tr><td colspan="2" style="color:#666">12 notes, then repeats</td></tr>
+          <tr><td colspan="2" style="color:#666">No sharp/flat: B-C, E-F</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th colspan="2">Intervals</th></tr></thead>
+        <tbody>
+          <tr><td>W</td><td>Whole step (2 frets)</td></tr>
+          <tr><td>H</td><td>Half step (1 fret)</td></tr>
+          <tr><td>Major</td><td>W W H W W W H</td></tr>
+          <tr><td>Minor</td><td>W H W W H W W</td></tr>
+          <tr><td>Penta</td><td>W+H W W W+H W</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
